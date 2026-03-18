@@ -1,19 +1,59 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    run: dealership
   name: dealership
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dealership
+      run: dealership
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
       labels:
-        app: dealership
+        run: dealership
     spec:
       containers:
-      - name: dealership
-        image: us.icr.io/sn-labs-bshree2604/dealership:latest
+      - image: us.icr.io/sn-labs-bshree2604/dealership:latest
+        imagePullPolicy: Always
+        name: dealership
         ports:
         - containerPort: 8000
+          protocol: TCP
+      restartPolicy: Always
+EOFcat > /home/project/xrwvm-fullstack_developer_capstone/server/deployment.yaml << 'EOF'
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: dealership
+  name: dealership
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: dealership
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: dealership
+    spec:
+      containers:
+      - image: us.icr.io/sn-labs-bshree2604/dealership:latest
+        imagePullPolicy: Always
+        name: dealership
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+      restartPolicy: Always
