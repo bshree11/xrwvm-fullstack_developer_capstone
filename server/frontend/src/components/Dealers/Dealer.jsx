@@ -21,8 +21,7 @@ const Dealer = () => {
   let params = useParams();
   let id =params.id;
   let dealer_url = root_url+`djangoapp/dealer/${id}`;
-  let reviews_url = root_url+`djangoapp/reviews/dealer/${id}`;
-  let post_review = root_url+`postreview/${id}`;
+  let reviews_url = root_url+`djangoapp/get_dealer_reviews/${id}`;  let post_review = root_url+`postreview/${id}`;
   
   const get_dealer = async ()=>{
     const res = await fetch(dealer_url, {
@@ -31,8 +30,12 @@ const Dealer = () => {
     const retobj = await res.json();
     
     if(retobj.status === 200) {
-      let dealerobjs = Array.from(retobj.dealer)
-      setDealer(dealerobjs[0])
+        let dealerobjs = retobj.dealer;
+        if(Array.isArray(dealerobjs)) {
+          setDealer(dealerobjs[0])
+        } else {
+          setDealer(dealerobjs)
+        }
     }
   }
 
