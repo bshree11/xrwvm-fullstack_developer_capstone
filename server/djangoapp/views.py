@@ -97,8 +97,7 @@ def get_dealer_reviews(request, dealer_id):
         review_text = review.get('review', '')
         sentiment = analyze_review_sentiments(review_text)
         review['sentiment'] = sentiment.get('sentiment', 'neutral')
-    
-    return JsonResponse({"status":200,"reviews":reviews}) ...
+    return JsonResponse({"status":200,"reviews":reviews})
 
 # Create a `get_dealer_details` view to render the dealer details
 def get_dealer_details(request, dealer_id):
